@@ -34,7 +34,7 @@ export default function Home() {
         <h1 className="title">
           Bem Vindo(a)
         </h1>
-        <OrkutNostalgicIconSet />
+        <OrkutNostalgicIconSet fas=1 confiavel=3 sexy=3/>
       </Box>
       </div>
       <div className="profileRelationsArea" style={{ gridArea: 'profileRelationsArea' }}>
