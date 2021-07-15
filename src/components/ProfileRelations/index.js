@@ -62,33 +62,32 @@ export const ProfileRelationsBoxWrapper = styled(Box)`
 `;
 
 export function ProfileRelations(props) {
-  var count = 0
-  // return console.log(props)
-  return (
-    <ProfileRelationsBoxWrapper>
-      <h2 className="smallTitle">
-        {props.title} ({props.items.length})
-      </h2>
-      <ul>
-        {props.items.map((itemAtual) => {
-          count += 1
-          if (count > 6) return
-          return (
-            <li key={itemAtual.id}>
-              <a href={`/users/${itemAtual.title}`}>
-                <img src={itemAtual.image} />
-                <span>{itemAtual.title}</span>
-              </a>
-            </li>
-          )
-        })}
-      </ul>
-      <hr/>
-      <p>
-        <a className="link" href={`/${props.className}`}>
-          Ver todos
-        </a>
-      </p>
-    </ProfileRelationsBoxWrapper>
-  )
+    var count = 0
+    return (
+      <ProfileRelationsBoxWrapper>
+        <h2 className="smallTitle">
+          {props.title} ({props.items.length})
+        </h2>
+        <ul>
+          {props.items.map((itemAtual) => {
+            count += 1
+            if (count > 6) return
+            return (
+              <li key={itemAtual.id}>
+                <a href={itemAtual.href}>
+                  <img src={itemAtual.image} />
+                  <span>{itemAtual.name}</span>
+                </a>
+              </li>
+            )
+          })}
+        </ul>
+        <hr/>
+        <p>
+          <a className="link" href={`/${props.className}`}>
+            Ver todos
+          </a>
+        </p>
+      </ProfileRelationsBoxWrapper>
+    )
 }
