@@ -74,7 +74,7 @@ export function ProfileRelations(props) {
             if (count > 6) return
             return (
               <li key={itemAtual.id}>
-                <a href={itemAtual.href}>
+                <a href={`/${props.className}/${itemAtual.id}`}>
                   <img src={itemAtual.image} />
                   <span>{itemAtual.name}</span>
                 </a>
