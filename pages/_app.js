@@ -11,11 +11,6 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: sans-serif;
-    background-image: url("https://wallpaperforu.com/wp-content/uploads/2021/04/Wallpaper-Video-Game-Art-Genshin-Impact-Xiao-2637x1461px51-scaled.jpg");// no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
     background-color: #D9E6F6;
   }
 

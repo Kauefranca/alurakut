@@ -1,45 +1,45 @@
 import React from 'react';
+import nookies from 'nookies';
+import jwt from 'jsonwebtoken';
 import MainGrid from '../src/components/MainGrid';
 import Box from '../src/components/Box';
-// import fetcher from 'node-fetch';
 import { ProfielSidebar } from '../src/components/ProfileSidebar'
 import { ProfileRelations } from '../src/components/ProfileRelations'
 import { AlurakutMenu, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommon';
 
-const READ_ONLY_TOKEN = process.env.NEXT_PUBLIC_RO_DATOCMS_API_SECRET
+const READ_ONLY_TOKEN = process.env.DATO_RO_API_KEY
+const BASE_URL = process.env.VERCEL_URL
 
-export default function Home() {
-  const githubUser = 'kauefranca';
+export default function Home(props) {
+  const githubUser = props.githubUser;
 
-  function parseDataFromDato(selector, setFunction) {  
+  function parseDataFromGithub(target, setFunction) {
     React.useEffect(function() {
-      fetch('https://graphql.datocms.com/',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': `Bearer ${READ_ONLY_TOKEN}`,
-          },
-          body: JSON.stringify({
-            query: `{ ${selector} { name id image } }`
-          }),
-        }
-      )
-      .then((response) => response.json())
-      .then((allResponse) => {
-        setFunction(allResponse.data[selector])})
-    }, [])
+      fetch(`https://api.github.com/users/${githubUser}/${target}`)
+      .then(function (respostaDoServidor) {
+        return respostaDoServidor.json();
+      })
+      .then(function(respostaCompleta) {
+        setFunction(respostaCompleta);
+      });
+    }, []);
   }
+
   const [followers, setFollowers] = React.useState([]);
   const [following, setFollowing] = React.useState([]);
-  const [communities, setCommunities] = React.useState([]);
-  parseDataFromDato('allFollowers', setFollowers)
-  parseDataFromDato('allFollowings', setFollowing)
-  parseDataFromDato('allCommunities', setCommunities)
+  const [communities, setCommunities] = React.useState(props.communities);
+  parseDataFromGithub('followers', setFollowers);
+  parseDataFromGithub('following', setFollowing);
 
   return (
     <>
+    {/* <body style={{
+      'backgroundImage': 'url("https://wallpaperforu.com/wp-content/uploads/2021/04/Wallpaper-Video-Game-Art-Genshin-Impact-Xiao-2637x1461px51-scaled.jpg")',// no-repeat center center fixed; 
+      'WebkitBackgroundSize': 'cover',
+      'MozBackgroundSize': 'cover',
+      'OBackgroundSize': 'cover',
+      'backgroundSize': 'cover',
+    }}> */}
     <AlurakutMenu githubUser={githubUser}/>
     <MainGrid>
       <div className="profileArea" style={{ gridArea: 'profileArea' }}>
@@ -75,7 +75,7 @@ export default function Home() {
             const comunidades = dados.newCommunity;
             setCommunities([...communities, comunidades])
           })
-        })}>
+          })}>
           <div>
             <input
               placeholder="Qual vai ser o nome da sua comunidade."
@@ -92,7 +92,7 @@ export default function Home() {
             />
           </div>
           <button>
-            Criar comunidade.
+            Criar comunidade
           </button>
         </form>
       </Box>
@@ -106,6 +106,60 @@ export default function Home() {
         </ProfileRelations>
       </div>
     </MainGrid>
+    {/* </body> */}
     </>
   )
+}
+
+export async function getServerSideProps(context) {
+  const comunidades = await fetch('https://graphql.datocms.com/', {
+    method: 'POST',
+    headers: {
+      'Authorization': READ_ONLY_TOKEN,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    body: JSON.stringify({ "query": `query {
+      allCommunities {
+        id
+        login
+        image
+        creatorSlug
+      }
+    }` })
+  })
+  .then(async(res)=>{
+    const _ = await res.json();
+    return _.data.allCommunities
+  });
+
+  const cookies = nookies.get(context);
+  const token = cookies.USER_TOKEN;
+  const { githubUser } = jwt.decode(token)
+
+  const isValid = await fetch(`${BASE_URL}/api/auth`, {
+    headers: {
+      Authorization: token
+    }
+  })
+  .then(async(res) => {
+    const _ = await res.json()
+    return _.isAuthenticated
+  })
+  
+  if (!isValid) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      }
+    }
+  }
+
+  return {
+    props: { 
+      githubUser,
+      communities: comunidades
+    },
+  }
 }

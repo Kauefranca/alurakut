@@ -1,5 +1,5 @@
 import { SiteClient } from 'datocms-client';
-const datoClient = new SiteClient(process.env.NEXT_PUBLIC_FA_DATOCMS_API_SECRET);
+const datoClient = new SiteClient(process.env.DATO_FA_API_KEY);
 
 export default async function requestHandler(req, res) {
     if (req.method === 'POST') {
