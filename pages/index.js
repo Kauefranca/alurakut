@@ -3,9 +3,22 @@ import nookies from 'nookies';
 import jwt from 'jsonwebtoken';
 import MainGrid from '../src/components/MainGrid';
 import Box from '../src/components/Box';
+import { createGlobalStyle } from 'styled-components';
 import { ProfielSidebar } from '../src/components/ProfileSidebar'
 import { ProfileRelations } from '../src/components/ProfileRelations'
 import { AlurakutMenu, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommon';
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    font-family: sans-serif;
+    background-image: url("https://wallpaperforu.com/wp-content/uploads/2021/04/Wallpaper-Video-Game-Art-Genshin-Impact-Xiao-2637x1461px51-scaled.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-color: #D9E6F6;
+  }
+`
 
 const READ_ONLY_TOKEN = process.env.DATO_RO_API_KEY
 const BASE_URL = process.env.VERCEL_URL
@@ -33,13 +46,7 @@ export default function Home(props) {
 
   return (
     <>
-    {/* <body style={{
-      'backgroundImage': 'url("https://wallpaperforu.com/wp-content/uploads/2021/04/Wallpaper-Video-Game-Art-Genshin-Impact-Xiao-2637x1461px51-scaled.jpg")',// no-repeat center center fixed; 
-      'WebkitBackgroundSize': 'cover',
-      'MozBackgroundSize': 'cover',
-      'OBackgroundSize': 'cover',
-      'backgroundSize': 'cover',
-    }}> */}
+    <GlobalStyle />
     <AlurakutMenu githubUser={githubUser}/>
     <MainGrid>
       <div className="profileArea" style={{ gridArea: 'profileArea' }}>
@@ -137,7 +144,7 @@ export async function getServerSideProps(context) {
   const token = cookies.USER_TOKEN;
   const { githubUser } = jwt.decode(token)
 
-  const isValid = await fetch(`https://${BASE_URL}/api/auth`, {
+  const isValid = await fetch(`http://${BASE_URL}/api/auth`, {
     headers: {
       Authorization: token
     }
