@@ -142,7 +142,6 @@ export async function getServerSideProps(context) {
 
   const cookies = nookies.get(context);
   const token = cookies.USER_TOKEN;
-  const { githubUser } = jwt.decode(token)
 
   const isValid = await fetch(`http://${BASE_URL}/api/auth`, {
     headers: {
@@ -162,6 +161,8 @@ export async function getServerSideProps(context) {
       }
     }
   }
+
+  const { githubUser } = jwt.decode(token)
 
   return {
     props: { 

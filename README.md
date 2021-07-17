@@ -19,7 +19,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 <table>
   <tr>
     <td align="center">
-      <a href="#">
+      <a href="https://github.com/omariosouto">
         <img src="https://avatars.githubusercontent.com/u/13791385?v=4" width="100px;" alt="omarioSouto"/><br>
         <sub>
           <b>Mario Souto</b>
@@ -27,7 +27,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
       </a>
     </td>
     <td align="center">
-      <a href="#">
+      <a href="https://github.com/peas">
         <img src="https://avatars.githubusercontent.com/u/71636?v=4" width="100px;" alt="peas"/><br>
         <sub>
           <b>Paulo Silveira</b>
@@ -35,7 +35,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
       </a>
     </td>
     <td align="center">
-      <a href="#">
+      <a href="https://github.com/juunegreiros">
         <img src="https://avatars.githubusercontent.com/u/17054729?v=4" width="100px;" alt="juunegreiros"/><br>
         <sub>
           <b>Juliana Negreiros</b>
