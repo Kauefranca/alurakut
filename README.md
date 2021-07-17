@@ -45,4 +45,4 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
   </tr>
 </table>
 
-[⬆](#alurakut)<br>
+[⬆ Voltar ao topo](#alurakut)<br>
