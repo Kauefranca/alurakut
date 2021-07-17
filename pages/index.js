@@ -137,7 +137,7 @@ export async function getServerSideProps(context) {
   const token = cookies.USER_TOKEN;
   const { githubUser } = jwt.decode(token)
 
-  const isValid = await fetch(`${BASE_URL}/api/auth`, {
+  const isValid = await fetch(`https://${BASE_URL}/api/auth`, {
     headers: {
       Authorization: token
     }
